@@ -1,5 +1,7 @@
 from flask import Flask
-
+import time
+import requests
+import openai 
 
 app = Flask(__name__)
 
