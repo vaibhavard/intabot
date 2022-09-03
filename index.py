@@ -49,7 +49,6 @@ def start(key):
     url = "https://api.ultramsg.com/instance16344/chats/messages"
     querystring = {"token":"2tnj8m4pezbjdtv9","chatId":chatid,"limit":"3"}
     headers = {'content-type': 'application/x-www-form-urlencoded'}
-    key = "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"
     openai.api_key = key
 
     def post(message,chatid):
