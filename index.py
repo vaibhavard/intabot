@@ -4,7 +4,18 @@ import requests
 import openai 
 
 app = Flask(__name__)
-
+avatar = "AI Assistant"
+backtrace = True
+freq = 0.3
+resp = 200
+temp = 0.8
+pres = 1
+TOKEN = "5182224145:AAEjkSlPqV-Q3rH8A9X8HfCDYYEQ44v_qy0"
+chat_id = "5075390513"
+chatid = "918587063221@c.us"
+url = "https://api.ultramsg.com/instance16344/chats/messages"
+querystring = {"token":"2tnj8m4pezbjdtv9","chatId":chatid,"limit":"3"}
+headers = {'content-type': 'application/x-www-form-urlencoded'}
 
 @app.route('/')
 def home():
@@ -13,6 +24,9 @@ def home():
 
 @app.route('/about')
 def about():
+    global TOKEN
+    global chatid
+    requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text=The query is")
     return 'About Page Route'
 
 
@@ -23,6 +37,8 @@ def portfolio():
 
 @app.route('/contact')
 def contact():
+    global chatid
+    post("HELLO",chatid)
     return 'Contact Page Route'
 
 
@@ -34,9 +50,26 @@ def api():
 
 @app.route('/hello/<name>')
 def hello_name(name):
-   start(name)
+   global TOKEN 
+   global chatid
+   try:
+       start(name)
+   except Exception as e:
+       requests.get(f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={e}")
+    
+    
    return 'Hello %s!' % name
 
+def post(message,chatid):
+    url = "https://api.ultramsg.com/instance16344/messages/chat"
+
+    payload = f"token=2tnj8m4pezbjdtv9&to={chatid}&body={message}&priority=10&referenceId="
+    headers = {'content-type': 'application/x-www-form-urlencoded'}
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    print(response.text)
+    
 def start(key):
 
     avatar = "AI Assistant"
